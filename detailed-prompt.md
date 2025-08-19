@@ -1,12 +1,14 @@
-# Database Connection Pool Configuration - Detailed Prompt
+# Database Connection Pool Configuration - LLM Query
 
-## Project Overview
+## Task Request
 
-This project demonstrates the implementation of a high-performance database connection pool using HikariCP (the default connection pool in Spring Boot 2+) in a Spring Boot application. The implementation focuses on optimizing database connectivity through proper configuration of key performance and reliability properties, comprehensive testing, and production-ready monitoring.
+Please create a high-performance database connection pool implementation using HikariCP (the default connection pool in Spring Boot 2+) in a Spring Boot application. The implementation should focus on optimizing database connectivity through proper configuration of key performance and reliability properties, comprehensive testing, and production-ready monitoring.
 
-## Implemented Features
+## Requirements to Implement
 
 ### 1. **HikariCP Configuration Properties**
+
+Please configure HikariCP with the following properties:
 
 - **Production Configuration** (`application.properties`):
 
@@ -23,16 +25,18 @@ This project demonstrates the implementation of a high-performance database conn
   - `pool-name`: "HikariCP-Production" for identification
 
 - **Test Configuration** (`application-test.properties`):
-  - Optimized for faster test execution with smaller pool sizes
+  - Optimize for faster test execution with smaller pool sizes
   - `maximum-pool-size`: 5, `minimum-idle`: 2
-  - Reduced timeouts for quicker test feedback
+  - Reduce timeouts for quicker test feedback
 
 ### 2. **Spring Boot Integration**
 
-- **Single File Architecture**: All components consolidated in `DatabaseConnectionPoolApplication.java`
-- **Configuration Properties Binding**: `@ConfigurationProperties("spring.datasource.hikari")`
-- **Auto-Configuration**: Leverages Spring Boot's HikariCP auto-configuration
-- **Component Organization**:
+Please implement the following Spring Boot integration:
+
+- **Single File Architecture**: Consolidate all components in `DatabaseConnectionPoolApplication.java`
+- **Configuration Properties Binding**: Use `@ConfigurationProperties("spring.datasource.hikari")`
+- **Auto-Configuration**: Leverage Spring Boot's HikariCP auto-configuration
+- **Component Organization**: Create the following components:
   - `HikariProperties`: Configuration properties class
   - `DatabaseConfig`: HikariDataSource bean configuration
   - `DatabaseHealthIndicator`: Custom health monitoring
@@ -41,17 +45,21 @@ This project demonstrates the implementation of a high-performance database conn
 
 ### 3. **Database Integration**
 
+Please set up database integration with:
+
 - **H2 In-Memory Database**: For development and testing
 - **JDBC Template Integration**: For database operations
-- **Connection Validation**: Automatic connection health checks
-- **Multi-Environment Support**: Separate configurations for production and test
+- **Connection Validation**: Implement automatic connection health checks
+- **Multi-Environment Support**: Create separate configurations for production and test
 
 ### 4. **Monitoring and Diagnostics**
 
-- **JMX Monitoring**: Enabled for production monitoring
-- **Custom Health Indicator**: `/actuator/health` with database status
-- **Custom Actuator Endpoint**: `/actuator/connectionpool` with detailed metrics
-- **Connection Pool Metrics**:
+Please implement monitoring and diagnostics with:
+
+- **JMX Monitoring**: Enable for production monitoring
+- **Custom Health Indicator**: Create `/actuator/health` endpoint with database status
+- **Custom Actuator Endpoint**: Implement `/actuator/connectionpool` with detailed metrics
+- **Connection Pool Metrics**: Include the following metrics:
   - Active connections count
   - Total connections count
   - Pool utilization percentage
@@ -59,6 +67,8 @@ This project demonstrates the implementation of a high-performance database conn
   - Pool name and configuration details
 
 ### 5. **REST API Endpoints**
+
+Please create the following REST API endpoints:
 
 - **`/test-db`**: Database connectivity test with connection details
 - **`/load-test`**: Connection pool load testing (10 concurrent operations)
@@ -68,7 +78,7 @@ This project demonstrates the implementation of a high-performance database conn
 
 ### 6. **Comprehensive Test Suite**
 
-**25 Test Methods Organized in 6 Categories:**
+Please create a comprehensive test suite with **25 Test Methods Organized in 7 Categories:**
 
 1. **HikariCP Properties Tests** (4 tests)
 
@@ -120,23 +130,29 @@ This project demonstrates the implementation of a high-performance database conn
 
 ### 7. **Performance Optimizations**
 
-- **Pool Size Calculation**: Optimized for typical web application loads
-- **Connection Lifetime Management**: Balanced for performance and resource efficiency
-- **Timeout Configuration**: Prevents resource starvation while maintaining responsiveness
-- **Leak Detection**: Enabled for development debugging
-- **Connection Validation**: Ensures connection reliability
+Please implement the following performance optimizations:
+
+- **Pool Size Calculation**: Optimize for typical web application loads
+- **Connection Lifetime Management**: Balance for performance and resource efficiency
+- **Timeout Configuration**: Prevent resource starvation while maintaining responsiveness
+- **Leak Detection**: Enable for development debugging
+- **Connection Validation**: Ensure connection reliability
 
 ### 8. **Production Readiness Features**
 
-- **Environment-Specific Configuration**: Separate settings for production and test
-- **Comprehensive Monitoring**: Health checks, metrics, and JMX integration
-- **Error Handling**: Graceful degradation and proper error reporting
-- **Resource Management**: Efficient connection pooling and cleanup
-- **Observability**: Detailed logging and metrics collection
+Please ensure the following production readiness features:
 
-## Technical Implementation Details
+- **Environment-Specific Configuration**: Create separate settings for production and test
+- **Comprehensive Monitoring**: Implement health checks, metrics, and JMX integration
+- **Error Handling**: Provide graceful degradation and proper error reporting
+- **Resource Management**: Ensure efficient connection pooling and cleanup
+- **Observability**: Include detailed logging and metrics collection
+
+## Technical Implementation Specifications
 
 ### **Maven Configuration** (`pom.xml`)
+
+Please set up Maven configuration with:
 
 - Spring Boot 3.2.0 parent
 - Dependencies: Web, JDBC, Actuator, HikariCP, H2, JUnit 5, Mockito
@@ -144,6 +160,8 @@ This project demonstrates the implementation of a high-performance database conn
 - Maven Surefire Plugin for testing
 
 ### **Testing Strategy**
+
+Please implement the following testing strategy:
 
 - **Unit Tests**: Individual component validation
 - **Integration Tests**: End-to-end application testing
@@ -153,12 +171,16 @@ This project demonstrates the implementation of a high-performance database conn
 
 ### **Build and Validation**
 
+Please provide:
+
 - **Maven Build System**: Complete project lifecycle management
 - **Automated Testing**: Comprehensive test suite execution
 - **Validation Script**: `run_and_validate.sh` for complete project validation
 - **Continuous Integration Ready**: All tests automated and reproducible
 
-## Skills Demonstrated
+## Expected Skills to Demonstrate
+
+The implementation should demonstrate:
 
 1. **Database Connection Pooling**: Advanced HikariCP configuration and optimization
 2. **Spring Boot Mastery**: Auto-configuration, properties binding, actuator integration
@@ -169,7 +191,9 @@ This project demonstrates the implementation of a high-performance database conn
 7. **API Design**: RESTful endpoints for testing and monitoring
 8. **Configuration Management**: Environment-specific settings and property binding
 
-## Project Structure
+## Expected Project Structure
+
+Please create the following project structure:
 
 ```
 database-connection-pool/
@@ -190,4 +214,6 @@ database-connection-pool/
 └── target/ (generated)
 ```
 
-This implementation provides a production-ready, high-performance database connection pool with comprehensive testing, monitoring, and optimization features that demonstrate enterprise-level Spring Boot application development skills.
+## Deliverable
+
+Please provide a production-ready, high-performance database connection pool with comprehensive testing, monitoring, and optimization features that demonstrate enterprise-level Spring Boot application development skills.
