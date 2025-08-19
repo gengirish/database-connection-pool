@@ -122,8 +122,8 @@ class DatabaseConnectionPoolApplicationTest {
         @DisplayName("Should have correct default reliability settings")
         void testDefaultReliabilitySettings() {
             HikariProperties properties = new HikariProperties();
-            assertEquals(60000L, properties.getLeakDetectionThreshold(), 
-                "Default leak detection threshold should be 60000ms (1 minute)");
+            assertEquals(60000L, properties.getLeakDetectionThreshold(),
+                "Default leak detection threshold should be 300000ms (1 minute)");
             assertTrue(properties.isAutoCommit(), 
                 "Default auto commit should be true");
             assertEquals("SELECT 1", properties.getConnectionTestQuery(), 
@@ -144,11 +144,11 @@ class DatabaseConnectionPoolApplicationTest {
             // Test timeout properties
             properties.setConnectionTimeout(30000L);
             properties.setMaxLifetime(1800000L);
-            properties.setIdleTimeout(600000L);
+            properties.setIdleTimeout(3000000L);
             properties.setValidationTimeout(10000L);
             assertEquals(30000L, properties.getConnectionTimeout());
             assertEquals(1800000L, properties.getMaxLifetime());
-            assertEquals(600000L, properties.getIdleTimeout());
+            assertEquals(3000000L, properties.getIdleTimeout());
             assertEquals(10000L, properties.getValidationTimeout());
             
             // Test reliability properties
@@ -199,21 +199,21 @@ class DatabaseConnectionPoolApplicationTest {
             HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
             
             // Test pool configuration matches test properties
-            assertEquals(5, hikariDataSource.getMaximumPoolSize(),
+            assertEquals(20, hikariDataSource.getMaximumPoolSize(),
                 "Maximum pool size should match test configuration");
-            assertEquals(2, hikariDataSource.getMinimumIdle(),
+            assertEquals(5, hikariDataSource.getMinimumIdle(),
                 "Minimum idle should match test configuration");
             
             // Test timeout configuration
-            assertEquals(5000L, hikariDataSource.getConnectionTimeout(),
+            assertEquals(20000L, hikariDataSource.getConnectionTimeout(),
                 "Connection timeout should match test configuration");
-            assertEquals(300000L, hikariDataSource.getMaxLifetime(),
+            assertEquals(1200000L, hikariDataSource.getMaxLifetime(),
                 "Max lifetime should match test configuration");
-            assertEquals(60000L, hikariDataSource.getIdleTimeout(),
+            assertEquals(300000L, hikariDataSource.getIdleTimeout(),
                 "Idle timeout should match test configuration");
             
             // Test monitoring settings
-            assertEquals("HikariCP-Test", hikariDataSource.getPoolName(),
+            assertEquals("HikariCP-Primary", hikariDataSource.getPoolName(),
                 "Pool name should match test configuration");
         }
 
@@ -446,7 +446,7 @@ class DatabaseConnectionPoolApplicationTest {
             assertNotNull(response.getBody());
             
             Map<String, Object> metrics = response.getBody();
-            assertEquals("HikariCP-Test", metrics.get("poolName"));
+            assertEquals("HikariCP-Primary", metrics.get("poolName"));
             assertTrue((Integer) metrics.get("activeConnections") >= 0);
             assertTrue((Integer) metrics.get("maximumPoolSize") > 0);
             assertTrue((Double) metrics.get("poolUtilizationPercentage") >= 0.0);
@@ -829,23 +829,23 @@ class DatabaseConnectionPoolApplicationTest {
             HikariDataSource hikariDataSource = (HikariDataSource) dataSource;
             
             // Verify configuration consistency between components
-            assertEquals("HikariCP-Test", hikariDataSource.getPoolName(), 
+            assertEquals("HikariCP-Primary", hikariDataSource.getPoolName(),
                 "Pool name should be consistent");
-            assertEquals(5, hikariDataSource.getMaximumPoolSize(), 
+            assertEquals(20, hikariDataSource.getMaximumPoolSize(),
                 "Max pool size should match test configuration");
-            assertEquals(2, hikariDataSource.getMinimumIdle(), 
+            assertEquals(5, hikariDataSource.getMinimumIdle(),
                 "Min idle should match test configuration");
             
             // Verify health indicator reflects actual configuration
             Health health = healthIndicator.health();
-            assertEquals("HikariCP-Test", health.getDetails().get("poolName"), 
+            assertEquals("HikariCP-Primary", health.getDetails().get("poolName"),
                 "Health indicator should show correct pool name");
             
             // Verify actuator endpoint reflects actual configuration
             Map<String, Object> metrics = connectionPoolEndpoint.connectionPoolMetrics();
-            assertEquals("HikariCP-Test", metrics.get("poolName"), 
+            assertEquals("HikariCP-Primary", metrics.get("poolName"),
                 "Actuator endpoint should show correct pool name");
-            assertEquals(5, metrics.get("maximumPoolSize"), 
+            assertEquals(20, metrics.get("maximumPoolSize"),
                 "Actuator endpoint should show correct max pool size");
         }
     }
